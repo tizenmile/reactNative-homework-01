@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import {
   ImageBackground,
   Keyboard,
+  KeyboardAvoidingView,
   Pressable,
   TextInput,
   TouchableWithoutFeedback,
@@ -34,7 +35,7 @@ const LoginScreen = ({ navigation }) => {
         source={require("reacthomework/assets/PhotoBG.png")}
       >
         <View style={{ flex: 4 }} />
-        <View style={styles.regItemsContainer}>
+        <KeyboardAvoidingView style={styles.regItemsContainer}>
           <Text
             style={{
               marginTop: 32,
@@ -108,11 +109,10 @@ const LoginScreen = ({ navigation }) => {
 
           <Pressable onPress={() => navigation.navigate("Registration")}>
             <Text style={styles.regButtonIf}>
-              Немає акаунт? Зареєструватися
+              Немає акаунта? Зареєструватися
             </Text>
           </Pressable>
-        </View>
-        {/* </View> */}
+        </KeyboardAvoidingView>
       </ImageBackground>
     </TouchableWithoutFeedback>
   );

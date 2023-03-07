@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import {
   ImageBackground,
   Keyboard,
+  KeyboardAvoidingView,
   Pressable,
   TextInput,
   TouchableWithoutFeedback,
@@ -10,6 +11,7 @@ import { View } from "react-native";
 import { styles } from "./RegistrationScreen.styled";
 import { Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as ImagePicker from "expo-image-picker";
 
 const RegistrationScreen = ({ navigation }) => {
   const [login, setLogin] = useState("");
@@ -23,6 +25,24 @@ const RegistrationScreen = ({ navigation }) => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const [image, setImage] = useState(null);
+
+  const handlePhotoPicker = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const handlePhotoRemove = () => {
+    setImage(null);
+  };
 
   const handleSubmit = () => {
     console.log({ login, email, password });
@@ -34,12 +54,41 @@ const RegistrationScreen = ({ navigation }) => {
         style={styles.container}
         source={require("reacthomework/assets/PhotoBG.png")}
       >
-        <View style={{ flex: 3 }} />
-        <View style={styles.regItemsContainer}>
+        <View style={{ flex: 4 }} />
+        <KeyboardAvoidingView style={styles.regItemsContainer}>
+        <ImageBackground
+          source={{ uri: image }}
+          imageStyle={{ borderRadius: 16 }}
+          resizeMode="cover"
+          style={{
+            backgroundColor: "#F6F6F6",
+            borderRadius: 16,
+            width: 120,
+            height: 120,
+            position: "absolute",
+            top: -60,
+          }}
+        >
+          {image ? (
+            <Pressable
+              onPress={handlePhotoRemove}
+              style={{ position: "absolute", bottom: 14, right: -21 }}
+            >
+              <Ionicons name={"remove-circle"} size={42} color="#FF6C00" />
+            </Pressable>
+          ) : (
+            <Pressable
+              onPress={handlePhotoPicker}
+              style={{ position: "absolute", bottom: 14, right: -21 }}
+            >
+              <Ionicons name={"add-circle"} size={42} color="#FF6C00" />
+            </Pressable>
+          )}
+        </ImageBackground>
           <Text
             style={{
-              marginTop: 32,
-              marginBottom: 32,
+              marginTop: 92,
+              marginBottom: 18,
               fontSize: 30,
               fontWeight: 500,
             }}
@@ -127,7 +176,7 @@ const RegistrationScreen = ({ navigation }) => {
           <Pressable onPress={() => navigation.navigate("Login")}>
             <Text style={styles.regButtonIf}>Вже є акаунт? Увійти</Text>
           </Pressable>
-        </View>
+        </KeyboardAvoidingView>
       </ImageBackground>
     </TouchableWithoutFeedback>
   );

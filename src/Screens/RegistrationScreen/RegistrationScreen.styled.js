@@ -6,10 +6,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "column",
+    position: "relative"
   },
   regItemsContainer: {
     backgroundColor: "white",
-    flex: 5,
+    flex: 9,
     width: "100%",
     alignItems: "center",
     borderTopLeftRadius: 25,
@@ -40,7 +41,7 @@ export const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 16,
     lineHeight: 19,
-    marginTop: 19,
+    marginTop: 22,
   },
   regButtonIf: {
     fontFamily: "Roboto",
@@ -49,6 +50,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#1B4371",
-    marginTop: 16,
+    marginTop: 8,
   },
 });
